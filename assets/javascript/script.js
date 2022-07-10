@@ -33,13 +33,15 @@ function callAPI() {
     }
     return coordinates;
   })
-  // get coordinates from previous .then function and pass it into this new fetch request then create our weather information and add it to our html
+  // Get coordinates from previous .then function and pass it into this new fetch request then create our weather information and add it to our html
   .then(function (getWeather) {
     return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + getWeather.lat + "&lon=" + getWeather.lon + "&units=Imperial&appid=e1739b9a89959eb08d85a9a92023d8d4", {})
   })
+  // Take response from fetch and parse to JSON
   .then(function (response) {
     return response.json()
   })
+  // Take weather data and populate HTML with information
   .then(function (data) {
     console.log(data);
     addInfoToHTML(myCity.value + " " + getUsableDate(data.current.dt), myWeatherApiContainer);
