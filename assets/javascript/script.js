@@ -1,4 +1,5 @@
 var myWeatherApiContainer = document.querySelector("#weatherSection");
+var myForecastContainer = document.querySelector("#forecast");
 var mySearchButton = document.querySelector(".btn");
 var myCity = document.querySelector("#cityName");
 
@@ -11,12 +12,68 @@ function getUsableDate(unixtimestamp){
   return usableDate[0];
 }
 
+
 // Add supplied information to an html element
-function addInfoToHTML(info, place) {
+function addInfoToHTML(info, place, hasImage) {
+  if(hasImage){
+    var myCityTitle = document.createElement("div");
+    var myCityDate = document.createElement("p");
+    var myCityImage = document.createElement("img");
+    myCityTitle.classList.add("container");
+    myCityDate.textContent = info;
+    myCityImage.setAttribute("src", "http://openweathermap.org/img/wn/" + hasImage + "@2x.png");
+    myCityTitle.appendChild(myCityDate);
+    myCityTitle.appendChild(myCityImage);
+    place.appendChild(myCityTitle);
+    return;
+  }
   var myElement = document.createElement("p");
   myElement.textContent = info;
   place.appendChild(myElement);
 }
+
+
+
+// Create, populate and add Forecast Cards to HTML
+function createForecastCard(date, image, temp, wind, hum){
+  
+  // Card Element variables
+  var myCard = document.createElement("div");
+  var myCardBody = document.createElement("div");
+  var myCardTitle = document.createElement("h5");
+  var myCardImage = document.createElement("img");
+  var myCardTemp = document.createElement("p");
+  var myCardWind = document.createElement("p");
+  var myCardHum = document.createElement("p");
+
+  // Add necessary Bootstrap classes to elements
+  myCard.classList.add("card", "text-white", "bg-primary", "mb-3");
+  myCardBody.classList.add("card-body");
+  myCardTitle.classList.add("card-title");
+
+  // Add information to Card Header
+  myCardTitle.textContent = date;
+  myCardBody.appendChild(myCardTitle);
+
+  // Add image to Card Title
+  myCardImage.setAttribute("src", "http://openweathermap.org/img/wn/" + image + "@2x.png");
+  myCardBody.appendChild(myCardImage);
+  
+  // Add rest of info to Card
+  myCardTemp.textContent = temp;
+  myCardBody.appendChild(myCardTemp);
+  myCardWind.textContent = wind;
+  myCardBody.appendChild(myCardWind);
+  myCardHum.textContent = hum;
+  myCardBody.appendChild(myCardHum);
+
+  // Add to the myForecastContainer
+  myCard.appendChild(myCardTitle);
+  myCard.appendChild(myCardBody);
+  myForecastContainer.appendChild(myCard);
+}
+
+
 
 // Get the supplied city's coordinates and then get the current weather 
 function callAPI() {
@@ -44,13 +101,22 @@ function callAPI() {
   // Take weather data and populate HTML with information
   .then(function (data) {
     console.log(data);
-    addInfoToHTML(myCity.value + " " + getUsableDate(data.current.dt), myWeatherApiContainer);
+    for(var i = 0; i < 5; i++){
+      var myDate = getUsableDate(data.daily[i].dt);
+      var myIMG = data.daily[i].weather[0].icon;
+      var myTemp = data.daily[i].temp.day + "\xB0F";
+      var myWind = data.daily[i].wind_speed + "MPH";
+      var myHumidity = data.daily[i].humidity + " %";
+      createForecastCard(myDate, myIMG, myTemp, myWind, myHumidity);
+    }
+    addInfoToHTML(myCity.value + " " + getUsableDate(data.current.dt), myWeatherApiContainer, data.current.weather[0].icon);
     addInfoToHTML("Temp: " + data.current.temp + "\xB0F", myWeatherApiContainer);
     addInfoToHTML("Wind Speed: " + data.current.wind_speed + "MPH", myWeatherApiContainer);
-    addInfoToHTML("Humidity: " + data.current.humidity, myWeatherApiContainer);
+    addInfoToHTML("Humidity: " + data.current.humidity + " %", myWeatherApiContainer);
     addInfoToHTML("UV Index: " + data.current.uvi, myWeatherApiContainer);
   })
 }
+
 
 
 // If user enters input and presses "ENTER" call the click function on mySearchButton
@@ -61,6 +127,8 @@ myCity.addEventListener("keypress", function (event) {
     mySearchButton.click();
   }
 })
+
+
 
 // If user clicks Search button then execute callAPI()
 mySearchButton.addEventListener('click', callAPI);
