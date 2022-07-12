@@ -1,9 +1,65 @@
+body{
+    background-color: white;
+}
+
 .jumbotron{
-    background-color: dodgerblue;
-    color: white;
+    background-color: #e6c229;
+    color: black;
     padding: 2rem 2rem;
+}
+
+main{
+    background-color: #e6c229;
+    border-radius: 5px;
 }
 
 h1{
     font-size: 2rem;
+}
+
+#searchContainer{
+    padding-top: 10px;
+    color: black;
+}
+
+#searchResultContainer{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+    color: black;
+}
+
+#current-weather-wrapper{
+    width: 20%;
+}
+
+#weather-title{
+    text-align: center;
+    font-size: 36px;
+}
+
+#forecast-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+#forecast-wrapper p:first-child{
+    font-size: 36px;
+}
+
+#forecast{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    margin-right: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }

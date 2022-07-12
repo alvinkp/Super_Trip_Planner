@@ -14,7 +14,7 @@ function getUsableDate(unixtimestamp){
 
 
 // Add supplied information to an html element
-function addInfoToHTML(info, place, hasImage) {
+function addInfoToHTML(info, place, hasImage, alt) {
   if(hasImage){
     var myCityTitle = document.createElement("div");
     var myCityDate = document.createElement("p");
@@ -22,6 +22,7 @@ function addInfoToHTML(info, place, hasImage) {
     myCityTitle.classList.add("container");
     myCityDate.textContent = info;
     myCityImage.setAttribute("src", "http://openweathermap.org/img/wn/" + hasImage + "@2x.png");
+    myCityImage.setAttribute("alt", alt);
     myCityTitle.appendChild(myCityDate);
     myCityTitle.appendChild(myCityImage);
     place.appendChild(myCityTitle);
@@ -35,7 +36,7 @@ function addInfoToHTML(info, place, hasImage) {
 
 
 // Create, populate and add Forecast Cards to HTML
-function createForecastCard(date, image, temp, wind, hum){
+function createForecastCard(date, image, temp, wind, hum, alt){
   
   // Card Element variables
   var myCard = document.createElement("div");
@@ -57,6 +58,7 @@ function createForecastCard(date, image, temp, wind, hum){
 
   // Add image to Card Title
   myCardImage.setAttribute("src", "http://openweathermap.org/img/wn/" + image + "@2x.png");
+  myCardImage.setAttribute("alt", alt);
   myCardBody.appendChild(myCardImage);
   
   // Add rest of info to Card
@@ -101,18 +103,19 @@ function callAPI() {
   // Take weather data and populate HTML with information
   .then(function (data) {
     console.log(data);
-    for(var i = 0; i < 5; i++){
+    for(var i = 1; i < 6; i++){
       var myDate = getUsableDate(data.daily[i].dt);
       var myIMG = data.daily[i].weather[0].icon;
-      var myTemp = data.daily[i].temp.day + "\xB0F";
-      var myWind = data.daily[i].wind_speed + "MPH";
-      var myHumidity = data.daily[i].humidity + " %";
-      createForecastCard(myDate, myIMG, myTemp, myWind, myHumidity);
+      var myTemp = "Temp: " + data.daily[i].temp.day + "\xB0F";
+      var myWind = "Wind Speed " + data.daily[i].wind_speed + "MPH";
+      var myHumidity = "Humidity " + data.daily[i].humidity + "%";
+      var myAltText = data.daily[i].weather[0].description;
+      createForecastCard(myDate, myIMG, myTemp, myWind, myHumidity, myAltText);
     }
-    addInfoToHTML(myCity.value + " " + getUsableDate(data.current.dt), myWeatherApiContainer, data.current.weather[0].icon);
+    addInfoToHTML(myCity.value + " " + getUsableDate(data.current.dt), myWeatherApiContainer, data.current.weather[0].icon, data.current.weather[0].description);
     addInfoToHTML("Temp: " + data.current.temp + "\xB0F", myWeatherApiContainer);
     addInfoToHTML("Wind Speed: " + data.current.wind_speed + "MPH", myWeatherApiContainer);
-    addInfoToHTML("Humidity: " + data.current.humidity + " %", myWeatherApiContainer);
+    addInfoToHTML("Humidity: " + data.current.humidity + "%", myWeatherApiContainer);
     addInfoToHTML("UV Index: " + data.current.uvi, myWeatherApiContainer);
   })
 }
