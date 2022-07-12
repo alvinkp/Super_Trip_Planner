@@ -12,6 +12,30 @@ function getUsableDate(unixtimestamp){
   return usableDate[0];
 }
 
+// Assign the appropriate style to UV Index
+function setUVStlye(uvi, container){
+  if(uvi >= 0.0 && uvi < 3.0){
+    container.style.backgroundColor = 'green';
+    container.style.color = 'white';
+    return;
+  } else if (uvi > 2.0 && uvi < 6.0){
+    container.style.backgroundColor = 'yellow';
+    container.style.color = 'black';
+    return;
+  } else if (uvi > 5.0 && uvi < 8.0){
+    container.style.backgroundColor = 'orange';
+    container.style.color = 'black';
+    return;
+  } else if (uvi > 7.0 && uvi < 11.0){
+    container.style.backgroundColor = 'red';
+    container.style.color = 'white';
+    return;
+  } else {
+    container.style.backgroundColor = 'purple';
+    container.style.color = 'white';
+  }
+}
+
 
 // Add supplied information to an html element
 function addInfoToHTML(info, place, hasImage, alt) {
@@ -26,6 +50,22 @@ function addInfoToHTML(info, place, hasImage, alt) {
     myCityTitle.appendChild(myCityDate);
     myCityTitle.appendChild(myCityImage);
     place.appendChild(myCityTitle);
+    return;
+  } else if(info.includes("UV")) {
+    var myUVContainer = document.createElement("div");
+    var myUVFillerText = document.createElement("p");
+    var myIndexContainer = document.createElement("div")
+    var myUVIndex = document.createElement("p");
+
+    myUVContainer.classList.add("container");
+    myUVFillerText.textContent = info.split(":")[0] + ": ";
+    myUVIndex.textContent = info.split(":")[1];
+    myIndexContainer.appendChild(myUVIndex);
+    setUVStlye(myUVIndex.textContent, myIndexContainer);
+    myIndexContainer.classList.add("UV-Index");
+    myUVContainer.appendChild(myUVFillerText);
+    myUVContainer.appendChild(myIndexContainer);
+    place.appendChild(myUVContainer);
     return;
   }
   var myElement = document.createElement("p");
@@ -116,7 +156,7 @@ function callAPI() {
     addInfoToHTML("Temp: " + data.current.temp + "\xB0F", myWeatherApiContainer);
     addInfoToHTML("Wind Speed: " + data.current.wind_speed + "MPH", myWeatherApiContainer);
     addInfoToHTML("Humidity: " + data.current.humidity + "%", myWeatherApiContainer);
-    addInfoToHTML("UV Index: " + data.current.uvi, myWeatherApiContainer);
+    addInfoToHTML("UV Index:" + data.current.uvi, myWeatherApiContainer);
   })
 }
 
