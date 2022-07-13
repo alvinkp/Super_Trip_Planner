@@ -21,7 +21,12 @@ function addRecentSearchButton(city, container){
 }
 
 // Retrieve previous search results and display them on screen
-
+function displayMySearchResults(myContainer){
+  var currentLocalStorage = JSON.parse(localStorage.getItem("myRecentSearches"));
+    for(var i = 0; i < currentLocalStorage.length; i++){
+      addRecentSearchButton(currentLocalStorage[i], myContainer);
+    }
+}
 
 // Store Successful Searches in localStorage
 function storeSuccessfulSearch(cityName, resultsContainer) {
@@ -38,10 +43,8 @@ function storeSuccessfulSearch(cityName, resultsContainer) {
     if(tempStorageArray.length > 5){
       tempStorageArray.shift();
     }
-    for(var i = 0; i < tempStorageArray.length; i++){
-      addRecentSearchButton(tempStorageArray[i], resultsContainer);
-    }
     localStorage.setItem("myRecentSearches", JSON.stringify(tempStorageArray));
+    displayMySearchResults(resultsContainer);
     return;
   }
   tempStorageArray.push(cityName);
@@ -219,9 +222,10 @@ myCity.addEventListener("keypress", function (event) {
   }
 })
 
-// If Local storage exists, populate the previousResultsContainer
-if(doesLocalStorageExist){
 
+// If localstorage exists display recent searches
+if(doesLocalStorageExist()){
+  displayMySearchResults(myPreviousResultsContainer);
 }
 
 
