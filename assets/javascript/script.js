@@ -7,34 +7,46 @@ var myCity = document.querySelector("#cityName");
 // Verify localstorage exists
 function doesLocalStorageExist(){
   if(localStorage.getItem("myRecentSearches") !== null){
-    console.log("true") 
     return true;
   } else {
-     console.log("false") 
     return false;
   }
 }
 
+// Create and append recent search button to myPreviousResultsContainer
+function addRecentSearchButton(city, container){
+  var searchButton = document.createElement("button");
+  searchButton.textContent = city;
+  container.appendChild(searchButton);
+}
+
+// Retrieve previous search results and display them on screen
+
+
 // Store Successful Searches in localStorage
-function storeSuccessfulSearch(cityName) {
+function storeSuccessfulSearch(cityName, resultsContainer) {
   var tempStorageArray = [];
   if(doesLocalStorageExist()){
     var currentLocalStorage = JSON.parse(localStorage.getItem("myRecentSearches"));
       if(currentLocalStorage.includes(cityName)){
-        console.log("City Already Exists!");
         return;
       }
     for(var i = 0; i < currentLocalStorage.length; i++){
       tempStorageArray.push(currentLocalStorage[i]);
     }
     tempStorageArray.push(cityName);
+    if(tempStorageArray.length > 5){
+      tempStorageArray.shift();
+    }
+    for(var i = 0; i < tempStorageArray.length; i++){
+      addRecentSearchButton(tempStorageArray[i], resultsContainer);
+    }
     localStorage.setItem("myRecentSearches", JSON.stringify(tempStorageArray));
-    console.log (tempStorageArray);
     return;
   }
   tempStorageArray.push(cityName);
+  addRecentSearchButton(tempStorageArray[0], resultsContainer);
   localStorage.setItem("myRecentSearches", JSON.stringify(tempStorageArray));
-  console.log (tempStorageArray);
 }
 
 // Convert Unix timestamp to month/day/year format (original idea: https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript)
@@ -165,7 +177,7 @@ function callAPI() {
       lat: data[0].lat,
       lon: data[0].lon
     }
-    storeSuccessfulSearch(data[0].name);
+    storeSuccessfulSearch(data[0].name, myPreviousResultsContainer);
     return coordinates;
   })
   // Get coordinates from previous .then function and pass it into this new fetch request then create our weather information and add it to our html
