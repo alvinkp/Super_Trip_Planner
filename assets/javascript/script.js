@@ -1,4 +1,5 @@
-var myPreviousResultsContainer = document.querySelector("#previousResultsContainer")
+var myPreviousResultsContainer = document.querySelector("#previousResultsContainer");
+var myWeatherResultsContainer = document.querySelector("#searchResultContainer");
 var myWeatherApiContainer = document.querySelector("#weatherSection");
 var myForecastContainer = document.querySelector("#forecast");
 var mySearchButton = document.querySelector(".btn");
@@ -11,6 +12,11 @@ function doesLocalStorageExist(){
   } else {
     return false;
   }
+}
+
+// Show weather container
+function showWeatherContainer(){
+myWeatherResultsContainer.classList.remove("hidden");
 }
 
 // Create and append recent search button to myPreviousResultsContainer
@@ -208,6 +214,7 @@ function callAPI() {
     addInfoToHTML("Wind Speed: " + data.current.wind_speed + "MPH", myWeatherApiContainer);
     addInfoToHTML("Humidity: " + data.current.humidity + "%", myWeatherApiContainer);
     addInfoToHTML("UV Index:" + data.current.uvi, myWeatherApiContainer);
+    showWeatherContainer();
   })
 }
 
