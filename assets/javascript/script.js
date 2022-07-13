@@ -1,7 +1,41 @@
+var myPreviousResultsContainer = document.querySelector("#previousResultsContainer")
 var myWeatherApiContainer = document.querySelector("#weatherSection");
 var myForecastContainer = document.querySelector("#forecast");
 var mySearchButton = document.querySelector(".btn");
 var myCity = document.querySelector("#cityName");
+
+// Verify localstorage exists
+function doesLocalStorageExist(){
+  if(localStorage.getItem("myRecentSearches") !== null){
+    console.log("true") 
+    return true;
+  } else {
+     console.log("false") 
+    return false;
+  }
+}
+
+// Store Successful Searches in localStorage
+function storeSuccessfulSearch(cityName) {
+  var tempStorageArray = [];
+  if(doesLocalStorageExist()){
+    var currentLocalStorage = JSON.parse(localStorage.getItem("myRecentSearches"));
+      if(currentLocalStorage.includes(cityName)){
+        console.log("City Already Exists!");
+        return;
+      }
+    for(var i = 0; i < currentLocalStorage.length; i++){
+      tempStorageArray.push(currentLocalStorage[i]);
+    }
+    tempStorageArray.push(cityName);
+    localStorage.setItem("myRecentSearches", JSON.stringify(tempStorageArray));
+    console.log (tempStorageArray);
+    return;
+  }
+  tempStorageArray.push(cityName);
+  localStorage.setItem("myRecentSearches", JSON.stringify(tempStorageArray));
+  console.log (tempStorageArray);
+}
 
 // Convert Unix timestamp to month/day/year format (original idea: https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript)
 function getUsableDate(unixtimestamp){
@@ -18,15 +52,15 @@ function setUVStlye(uvi, container){
     container.style.backgroundColor = 'green';
     container.style.color = 'white';
     return;
-  } else if (uvi > 2.0 && uvi < 6.0){
+  } else if (uvi >= 3.0 && uvi < 6.0){
     container.style.backgroundColor = 'yellow';
     container.style.color = 'black';
     return;
-  } else if (uvi > 5.0 && uvi < 8.0){
+  } else if (uvi >= 6.0 && uvi < 8.0){
     container.style.backgroundColor = 'orange';
     container.style.color = 'black';
     return;
-  } else if (uvi > 7.0 && uvi < 11.0){
+  } else if (uvi >= 8.0 && uvi < 11.0){
     container.style.backgroundColor = 'red';
     container.style.color = 'white';
     return;
@@ -43,7 +77,7 @@ function addInfoToHTML(info, place, hasImage, alt) {
     var myCityTitle = document.createElement("div");
     var myCityDate = document.createElement("p");
     var myCityImage = document.createElement("img");
-    myCityTitle.classList.add("container");
+    myCityTitle.classList.add("container", "weather-image");
     myCityDate.textContent = info;
     myCityImage.setAttribute("src", "http://openweathermap.org/img/wn/" + hasImage + "@2x.png");
     myCityImage.setAttribute("alt", alt);
@@ -126,10 +160,12 @@ function callAPI() {
   })
   // Take parsed response in as data and extract lat and lon, store it and return coordinates object
   .then(function (data) {
+    console.log(data);
     var coordinates = {
       lat: data[0].lat,
       lon: data[0].lon
     }
+    storeSuccessfulSearch(data[0].name);
     return coordinates;
   })
   // Get coordinates from previous .then function and pass it into this new fetch request then create our weather information and add it to our html
@@ -171,6 +207,10 @@ myCity.addEventListener("keypress", function (event) {
   }
 })
 
+// If Local storage exists, populate the previousResultsContainer
+if(doesLocalStorageExist){
+
+}
 
 
 // If user clicks Search button then execute callAPI()
