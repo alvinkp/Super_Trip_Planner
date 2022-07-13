@@ -19,6 +19,24 @@ function showWeatherContainer(){
 myWeatherResultsContainer.classList.remove("hidden");
 }
 
+// Reset my containers
+function resetWeatherAndCities(){
+  var numSearches = myPreviousResultsContainer.children.length;
+  for(var i = 0; i <numSearches; i++){
+    myPreviousResultsContainer.children[0].remove();
+  }
+
+  var weather = myWeatherApiContainer.children.length;
+  for(var i = 0; i < weather; i++){
+    myWeatherApiContainer.children[0].remove();
+  }
+
+  var forecast = myForecastContainer.children.length;
+  for(var i = 0; i < forecast; i++){
+    myForecastContainer.children[0].remove();
+  }
+}
+
 // Create and append recent search button to myPreviousResultsContainer
 function addRecentSearchButton(city, container){
   var searchButton = document.createElement("button");
@@ -174,6 +192,7 @@ function createForecastCard(date, image, temp, wind, hum, alt){
 
 // Get the supplied city's coordinates and then get the current weather 
 function callAPI() {
+  resetWeatherAndCities();
   fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + myCity.value + "&limit=1&appid=e1739b9a89959eb08d85a9a92023d8d4", {})
   // Take response from fetch and parse to JSON
   .then(function (response) {
