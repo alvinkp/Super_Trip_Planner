@@ -41,6 +41,7 @@ function resetWeatherAndCities(){
 function addRecentSearchButton(city, container){
   var searchButton = document.createElement("button");
   searchButton.textContent = city;
+  searchButton.setAttribute("class", "previous");
   container.appendChild(searchButton);
 }
 
@@ -58,6 +59,7 @@ function storeSuccessfulSearch(cityName, resultsContainer) {
   if(doesLocalStorageExist()){
     var currentLocalStorage = JSON.parse(localStorage.getItem("myRecentSearches"));
       if(currentLocalStorage.includes(cityName)){
+        displayMySearchResults(resultsContainer);
         return;
       }
     for(var i = 0; i < currentLocalStorage.length; i++){
@@ -248,6 +250,16 @@ myCity.addEventListener("keypress", function (event) {
   }
 })
 
+myPreviousResultsContainer.onclick = function(event) {
+  var dogShit = event.target;
+  
+  if(dogShit.classList.contains("previous")){
+    myCity.value = dogShit.textContent;
+    myCity.setAttribute("placeholder", dogShit.textContent);
+    callAPI();
+  }
+
+}
 
 // If localstorage exists display recent searches
 if(doesLocalStorageExist()){
