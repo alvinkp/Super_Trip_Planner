@@ -250,6 +250,7 @@ myCity.addEventListener("keypress", function (event) {
   }
 })
 
+// Event Delegate for Previous Searches
 myPreviousResultsContainer.onclick = function(event) {
   var dogShit = event.target;
   
