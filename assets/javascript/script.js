@@ -1,4 +1,5 @@
 var myPreviousResultsContainer = document.querySelector("#previousResultsContainer");
+var myBottomContainer = document.querySelector("#bottom-container");
 var myWeatherResultsContainer = document.querySelector("#searchResultContainer");
 var myWeatherApiContainer = document.querySelector("#weatherSection");
 var myForecastContainer = document.querySelector("#forecast");
@@ -16,7 +17,7 @@ function doesLocalStorageExist(){
 
 // Show weather container
 function showWeatherContainer(){
-myWeatherResultsContainer.classList.remove("hidden");
+myBottomContainer.classList.remove("hidden");
 }
 
 // Reset my containers
@@ -225,8 +226,8 @@ function callAPI() {
       var myDate = getUsableDate(data.daily[i].dt);
       var myIMG = data.daily[i].weather[0].icon;
       var myTemp = "Temp: " + data.daily[i].temp.day + "\xB0F";
-      var myWind = "Wind Speed " + data.daily[i].wind_speed + "MPH";
-      var myHumidity = "Humidity " + data.daily[i].humidity + "%";
+      var myWind = "Wind Speed: " + data.daily[i].wind_speed + "MPH";
+      var myHumidity = "Humidity: " + data.daily[i].humidity + "%";
       var myAltText = data.daily[i].weather[0].description;
       createForecastCard(myDate, myIMG, myTemp, myWind, myHumidity, myAltText);
     }
@@ -252,11 +253,11 @@ myCity.addEventListener("keypress", function (event) {
 
 // Event Delegate for Previous Searches
 myPreviousResultsContainer.onclick = function(event) {
-  var dogShit = event.target;
+  var myButton = event.target;
   
-  if(dogShit.classList.contains("previous")){
-    myCity.value = dogShit.textContent;
-    myCity.setAttribute("placeholder", dogShit.textContent);
+  if(myButton.classList.contains("previous")){
+    myCity.value = myButton.textContent;
+    myCity.setAttribute("placeholder", myButton.textContent);
     callAPI();
   }
 

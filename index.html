@@ -23,33 +23,32 @@
     </header>
 
     <main class="container">
-        <section id="searchContainer" class="container">
-            <h1>Please enter a city:</h1>
-            <div class="input-group mb-3">
-                <input id="cityName" type="text" class="form-control" placeholder="City Name" aria-label="City Name"
-                    aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
+        <div id=top-container class="container">
+            <section id="searchContainer" class="container">
+                <h1>Please enter a city:</h1>
+                <div class="input-group mb-3">
+                    <input id="cityName" type="text" class="form-control" placeholder="City Name" aria-label="City Name"
+                        aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="previousResultsContainer" class="container">
-        </section>
-
-        <div id="searchResultContainer" class="container hidden">
-            <div id="current-weather-wrapper" class="container">
-                <p id="weather-title">Today</p>
-                <section id="weatherSection" class="container card">
-                
-                </section>
-            </div>
-
-            <div id="forecast-wrapper" class="container">
-                <p>5-Day Forecast</p>
-                <section id="forecast" class="container-fluid">
-
-                </section>
+            </section>
+            <section id="previousResultsContainer" class="container">
+            </section>
+        </div>
+        <div id=bottom-container class="container hidden">
+            <div id="searchResultContainer" class="container">
+                <div id="current-weather-wrapper" class="container">
+                    <p id="weather-title">Today</p>
+                    <section id="weatherSection" class="container card">
+                    </section>
+                </div>
+                <div id="forecast-wrapper" class="container">
+                    <p>5-Day Forecast</p>
+                    <section id="forecast" class="container-fluid">
+                    </section>
+                </div>
             </div>
         </div>
     </main>
