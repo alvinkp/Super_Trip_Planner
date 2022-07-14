@@ -24,13 +24,18 @@ AS A traveler I WANT to see the weather outlook for multiple cities SO THAT I ca
 ## 🔧 <span style="color:#FFD23F">Optimizations</span> 
 
 ### <span style="color:#EE4266">HTML</span>
-
+- Used Bootstrap to style website quickly
+- Split presentation of data into separate containers
+- Added CSS Generated Icon patterned background
 
 ### <span style="color:#EE4266">CSS</span>
-
+- Styled Background, Previous Search Results and Cards
 
 ### <span style="color:#EE4266">Javascript</span>
-
+- Create and Add HTML Elements dynamically
+- Added Weather Icons and Alt Text
+- Fetched information from APIs to generate content for HTML page
+- Added styling and Bootstrap classes to elements
 
 ---
 

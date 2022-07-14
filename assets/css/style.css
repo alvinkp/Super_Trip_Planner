@@ -6,6 +6,8 @@ body{
     background-color: #007bff;
     color: white;
     padding: 2rem 2rem;
+    margin-bottom: 20px;
+    margin-top: 50px;
 }
 
 main{
@@ -14,8 +16,9 @@ main{
 
 #top-container{
     background-color: white;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     border-radius: 5px;
+    text-align: center;
 }
 
 #bottom-container{
