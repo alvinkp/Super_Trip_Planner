@@ -36,13 +36,14 @@ AS A traveler I WANT to see the weather outlook for multiple cities SO THAT I ca
 - Added Weather Icons and Alt Text
 - Fetched information from APIs to generate content for HTML page
 - Added styling and Bootstrap classes to elements
+- Dynamically change the styling on the UV index to reflect the color range on UV Index chart.
 
 ---
 
 ## 📷 <span style="color:#FFD23F">Screenshots</span> 
 
-![Completed Challenge06 Functionality Example 1](./assets/images/Challenge05_shot01.PNG)
-![Completed Challenge06 Functionality Example 2](./assets/images/Challenge05_shot02.PNG)
+![Completed Challenge06 Functionality Example 1](./assets/images/Challenge06_shot01.PNG)
+![Completed Challenge06 Functionality Example 2](./assets/images/Challenge06_shot02.PNG)
 
 ---
 
