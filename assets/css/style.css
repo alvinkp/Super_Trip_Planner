@@ -20,6 +20,10 @@ h1{
 #searchContainer{
     padding-top: 10px;
     color: #f17105;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #searchResultContainer{
@@ -27,6 +31,12 @@ h1{
     flex-direction: row;
     align-items:center;
     color: #f17105;
+}
+
+#previousResultsContainer{
+    max-width: 50%;
+    display: flex;
+    justify-content: space-between;
 }
 
 #current-weather-wrapper{

@@ -41,7 +41,7 @@ function resetWeatherAndCities(){
 function addRecentSearchButton(city, container){
   var searchButton = document.createElement("button");
   searchButton.textContent = city;
-  searchButton.setAttribute("class", "previous");
+  searchButton.classList.add("previous", "btn", "btn-secondary");
   container.appendChild(searchButton);
 }
 
