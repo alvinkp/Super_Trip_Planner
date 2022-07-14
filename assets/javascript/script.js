@@ -121,7 +121,7 @@ function addInfoToHTML(info, place, hasImage, alt) {
     var myCityImage = document.createElement("img");
     myCityTitle.classList.add("container", "weather-image");
     myCityDate.textContent = info;
-    myCityImage.setAttribute("src", "http://openweathermap.org/img/wn/" + hasImage + "@2x.png");
+    myCityImage.setAttribute("src", "https://openweathermap.org/img/wn/" + hasImage + "@2x.png");
     myCityImage.setAttribute("alt", alt);
     myCityTitle.appendChild(myCityDate);
     myCityTitle.appendChild(myCityImage);
@@ -173,7 +173,7 @@ function createForecastCard(date, image, temp, wind, hum, alt){
   myCardBody.appendChild(myCardTitle);
 
   // Add image to Card Title
-  myCardImage.setAttribute("src", "http://openweathermap.org/img/wn/" + image + "@2x.png");
+  myCardImage.setAttribute("src", "https://openweathermap.org/img/wn/" + image + "@2x.png");
   myCardImage.setAttribute("alt", alt);
   myCardBody.appendChild(myCardImage);
   
@@ -196,7 +196,7 @@ function createForecastCard(date, image, temp, wind, hum, alt){
 // Get the supplied city's coordinates and then get the current weather 
 function callAPI() {
   resetWeatherAndCities();
-  fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + myCity.value + "&limit=1&appid=e1739b9a89959eb08d85a9a92023d8d4", {})
+  fetch("https://api.openweathermap.org/geo/1.0/direct?q=" + myCity.value + "&limit=1&appid=e1739b9a89959eb08d85a9a92023d8d4", {})
   // Take response from fetch and parse to JSON
   .then(function (response) {
     return response.json();
